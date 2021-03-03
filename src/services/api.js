@@ -35,8 +35,8 @@ export const register = async (data) => {
     }).then((res) => res.json());
 
     if(response.status === "ok") {
-        return "Success"
+        return response
     } else {
-        return "Error"
+        return response
     }
 }
