@@ -3,6 +3,7 @@ import React from 'react';
 import { Container, Row, Col, Form, Button, Badge } from 'react-bootstrap';
 import { validateEmail, matchPassword, validateString, validateWebsite } from "../../utility/validation";
 import { register } from '../../services/api'
+import { withRouter } from 'react-router-dom';
 
 class Registration extends Component {
 
@@ -27,30 +28,35 @@ class Registration extends Component {
     }
 
     onSubmitForm() {
-        let data = {};
-        //validate inputs
-        if(validateEmail(this.state.email)) {
-          data.email = this.state.email;
-        }
+      const { history } = this.props;
+      let data = {};
+      //validate inputs
+      if(validateEmail(this.state.email)) {
+        data.email = this.state.email;
+      }
 
-        if(matchPassword(this.state.password, this.state.confPassword)) {
-          data.password = this.state.password;
-        }
+      if(matchPassword(this.state.password, this.state.confPassword)) {
+        data.password = this.state.password;
+      }
 
-        if(validateString(this.state.orgName)) {
-          data.orgName = this.state.orgName;
-        }
+      if(validateString(this.state.orgName)) {
+        data.orgName = this.state.orgName;
+      }
 
-        if(validateWebsite(this.state.orgSite)) {
-          data.orgSite = this.state.orgSite;
-        }
+      if(validateWebsite(this.state.orgSite)) {
+        data.orgSite = this.state.orgSite;
+      }
 
-        if(Object.keys(data).length > 3) {
-          register(data)
+      if(Object.keys(data).length > 3) {
+        let result = register(data)
+        if(result === "Success" && history) {
+          history.push('/login');
         }
+      }
     }
 
     render() {
+      const { history } = this.props;
         return(
             <Container>
                 <Row>
@@ -99,4 +105,4 @@ class Registration extends Component {
     }
 }
 
-export default Registration
+export default withRouter(Registration)
