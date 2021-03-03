@@ -48,10 +48,13 @@ class Registration extends Component {
       }
 
       if(Object.keys(data).length > 3) {
-        let result = register(data)
-        if(result === "Success" && history) {
-          history.push('/login');
-        }
+        register(data).then((response)=>{
+          if(response.status === "ok" && history) {
+            history.push('/login');
+          } else {
+            alert("Try Again")
+          }
+        });
       }
     }
 
