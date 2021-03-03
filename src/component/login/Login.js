@@ -34,7 +34,7 @@ class Login extends Component {
             data.password = this.state.password;
         }
 
-        if(Object.keys(data).length > 0) {
+        if(Object.keys(data).length > 1) {
             login(data);
         }
     }
