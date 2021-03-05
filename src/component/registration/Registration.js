@@ -49,8 +49,10 @@ class Registration extends Component {
 
       if(Object.keys(data).length > 3) {
         register(data).then((response)=>{
+          console.log(response.data.username)
           if(response.status === "ok" && history) {
-            history.push('/login');
+            localStorage.setItem("username", response.data.username);
+            history.push('/verify');
           } else {
             alert("Try Again")
           }

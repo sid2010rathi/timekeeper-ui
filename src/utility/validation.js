@@ -32,3 +32,10 @@ export const validateWebsite = (website) => {
     }
     return false;
 }
+
+export const validateCode = (code) => {
+    if(code.length === 6) {
+        return true;
+    }
+    return false;
+}
