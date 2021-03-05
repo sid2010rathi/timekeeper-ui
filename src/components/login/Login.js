@@ -1,6 +1,6 @@
 import { Component } from "react";
 import React from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Badge } from 'react-bootstrap';
 import { validateEmail, validatePassword } from '../../utility/validation';
 import { login } from '../../services/api'
 
@@ -15,6 +15,7 @@ class Login extends Component {
         };
         this.onInputchange = this.onInputchange.bind(this);
         this.onSubmitForm = this.onSubmitForm.bind(this);
+        localStorage.removeItem("username")
     }
 
     onInputchange(event) {
@@ -34,7 +35,7 @@ class Login extends Component {
             data.password = this.state.password;
         }
 
-        if(Object.keys(data).length > 0) {
+        if(Object.keys(data).length > 1) {
             login(data);
         }
     }
@@ -44,7 +45,10 @@ class Login extends Component {
             <Container>
                 <Row>
                     <Col />
-                    <Col>
+                    <Col xs={6}>
+                        <h3>
+                            <Badge variant="secondary">Login</Badge>
+                        </h3>
                         <Form>
                             <Form.Group>
                                 <Form.Label>Email address</Form.Label>
