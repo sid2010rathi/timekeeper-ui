@@ -15,6 +15,7 @@ class Login extends Component {
         };
         this.onInputchange = this.onInputchange.bind(this);
         this.onSubmitForm = this.onSubmitForm.bind(this);
+        localStorage.removeItem("username")
     }
 
     onInputchange(event) {
