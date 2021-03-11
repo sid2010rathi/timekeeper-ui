@@ -5,9 +5,10 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import Login from "./component/login/Login";
-import Registration from "./component/registration/Registration";
-import VerifyAccount from "./component/registration/VerifyAccount";
+import Login from "./components/login/Login";
+import Registration from "./components/registration/Registration";
+import VerifyAccount from "./components/registration/VerifyAccount";
+import DashboardLayout from "./components/Layout/DashboardLayout";
 
 const Routes = (props) => (
   <Router {...props}>
@@ -18,6 +19,7 @@ const Routes = (props) => (
       <Route exact path="/">
         <Redirect to="/login" />
       </Route>
+      <Route path="/dashboard" component={DashboardLayout} />
     </Switch>
   </Router>
 );

@@ -14,13 +14,13 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from '../Dashboard/listItems';
+import { mainListItems, secondaryListItems } from './listItems';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="#">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+export default function DashboardLayout() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -161,7 +161,9 @@ export default function Dashboard() {
         <List>{mainListItems}</List>
         <Divider />
         <List>{secondaryListItems}</List>
-      </Drawer> 
+      </Drawer>
+      <main className={classes.content}>
+      </main>
     </div>
   );
 }
