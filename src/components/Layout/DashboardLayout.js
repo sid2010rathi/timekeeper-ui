@@ -15,6 +15,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
+import { Router } from 'react-router';
+import ContentRoutes from "./ContentRoutes";
+import EmployeeOnboard from "../EmployeeRegistration/EmployeeOnboard";
+import AddressForm from "../EmployeeRegistration/AddressForm";
+
 
 function Copyright() {
   return (
@@ -113,6 +118,8 @@ const useStyles = makeStyles((theme) => ({
 export default function DashboardLayout() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const [navlinkClicked] = React.useState(0);
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -120,7 +127,21 @@ export default function DashboardLayout() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  let currentURL = window.location.href;
+  
+  let content;
+  switch(window.location.href){
+    case('http://localhost:3000/dashboard/employee_onboard'): 
+      content = <EmployeeOnboard></EmployeeOnboard>
+      break;
+    case('http://localhost:3000/dashboard/address'):
+      content = <AddressForm></AddressForm>
+  }
+  
+  
+  let container = <main id="main" className={classes.content}>
+                    {content}                 
+                  </main>
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -162,8 +183,9 @@ export default function DashboardLayout() {
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>
-      <main className={classes.content}>
-      </main>
+      {container}
     </div>
   );
+  
 }
+

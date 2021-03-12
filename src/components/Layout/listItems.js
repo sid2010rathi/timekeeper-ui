@@ -31,12 +31,25 @@ export const mainListItems = (
     </ListItem>
     </NavLink>
 
+    <NavLink to="dashboard/employee_onboard" replace>
+    <ListItem button>
+      <ListItemIcon>
+        <PeopleIcon />
+      </ListItemIcon>
+      <ListItemText primary="Employee Onboard" />
+    </ListItem>
+    </NavLink>
+
+    <Link to="dashboard/address" replace>
     <ListItem button>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
+      <ListItemText primary="Address" />
     </ListItem>
+    </Link>
+    
+
     <ListItem button>
       <ListItemIcon>
         <LayersIcon />
