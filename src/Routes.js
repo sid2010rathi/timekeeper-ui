@@ -9,6 +9,7 @@ import Login from "./components/login/Login";
 import Registration from "./components/registration/Registration";
 import VerifyAccount from "./components/registration/VerifyAccount";
 import DashboardLayout from "./components/Layout/DashboardLayout";
+import EmployeeOnboard from "./components/EmployeeRegistration/EmployeeOnboard";
 
 const Routes = (props) => (
   <Router {...props}>
@@ -16,6 +17,7 @@ const Routes = (props) => (
       <Route path="/login" component={Login} />
       <Route path="/register" component={Registration} />
       <Route path="/verify" component={VerifyAccount} />
+      {/* <Route path="/employee_onboard" component={EmployeeOnboard} /> */}
       <Route exact path="/">
         <Redirect to="/login" />
       </Route>
