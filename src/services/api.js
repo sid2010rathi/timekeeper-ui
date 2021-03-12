@@ -1,4 +1,4 @@
-let organizationId;
+let organizationId ="";
 export const login = async (data) => {
     console.log("Call Login API");
     const response = await fetch('http://localhost:5000/login', {
@@ -14,7 +14,7 @@ export const login = async (data) => {
 
     if(response.status === "ok") {
         localStorage.setItem('token', response.token);
-        organizationId = response.user.organizationId;
+        localStorage.setItem('organizationId', response.user.organizationId);
         alert("Success");
     } else {
         alert("Error");
@@ -66,6 +66,7 @@ export const verifyCode = async (data) => {
 
 export const employeeOnboard = async (data) => {
     console.log("Employee Onboard");
+    console.log(organizationId);
 
     const response = await fetch('http://localhost:5000/userscreation', {
         method: 'POST',
@@ -73,12 +74,12 @@ export const employeeOnboard = async (data) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            userFirstName: data.username,
-            userLastName: data.userLastName,
+            userFirstName: data.userFirstname,
+            userLastName: data.userLastname,
             userUsername: data.userUsername,
             userPassword: data.userPassword,
             userRole: data.userRole,
-            userOrganizationId:organizationId
+            userOrganizationId:localStorage.getItem('organizationId')
             
         })
     }).then((res) => res.json());
