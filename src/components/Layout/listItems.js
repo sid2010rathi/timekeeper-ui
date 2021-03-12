@@ -38,17 +38,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Employee Onboard" />
     </ListItem>
-    </NavLink>
-
-    <Link to="dashboard/address" replace>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Address" />
-    </ListItem>
-    </Link>
-    
+    </NavLink>    
 
     <ListItem button>
       <ListItemIcon>
