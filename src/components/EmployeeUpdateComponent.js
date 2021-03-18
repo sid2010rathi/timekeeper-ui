@@ -91,7 +91,7 @@ const EmployeeUpdate = (props) => {
         <Typography component="h1" variant="h5">
           Employee Details
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmitForm}>
+        <form className={classes.form} noValidate autoComplete="off" onSubmit={onSubmitForm}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -135,7 +135,8 @@ const EmployeeUpdate = (props) => {
             required
             fullWidth
             name="userPassword"
-            id="userPassword"            
+            id="userPassword" 
+            type="password"           
             onChange={event => setPassword(event.target.value)}
             value={userPassword || ''}
             placeholder="Password"
