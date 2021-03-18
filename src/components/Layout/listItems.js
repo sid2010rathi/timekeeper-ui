@@ -31,24 +31,23 @@ export const mainListItems = (
     </ListItem>
     </NavLink>
 
-    <NavLink to="dashboard/employee_onboard" replace>
+    <NavLink to={`/dashboard/employee_onboard`}>
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Employee Onboard" />
     </ListItem>
-    </NavLink>
+    </NavLink>  
 
-    <Link to="dashboard/address" replace>
+    <NavLink to={`/dashboard/organization_update`}>
     <ListItem button>
       <ListItemIcon>
-        <BarChartIcon />
+        <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Address" />
+      <ListItemText primary="Organization Profile" />
     </ListItem>
-    </Link>
-    
+    </NavLink>    
 
     <ListItem button>
       <ListItemIcon>
