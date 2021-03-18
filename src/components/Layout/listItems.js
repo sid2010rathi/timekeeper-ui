@@ -31,7 +31,7 @@ export const mainListItems = (
     </ListItem>
     </NavLink>
 
-    <NavLink to="dashboard/employee_onboard" replace>
+    <NavLink to={`/dashboard/employee_onboard`}>
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />
