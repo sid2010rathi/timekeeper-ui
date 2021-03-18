@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { validateEmail, validatePassword } from '../../utility/validation';
 import { login } from '../../services/api';
+import { NavLink } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -119,21 +120,19 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
-
-          >
+            className={classes.submit}>
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <NavLink to="#" variant="body2">
                 Forgot password?
-              </Link>
+              </NavLink>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <NavLink to="/register" variant="body2">
                 {"Don't have an account? Sign Up"}
-              </Link>
+              </NavLink>
             </Grid>
           </Grid>
         </form>

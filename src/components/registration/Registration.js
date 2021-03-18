@@ -5,7 +5,7 @@ import '../../css/style.css';
 import { Container, Row, Col, Form, Button, Badge } from 'react-bootstrap';
 import { validateEmail, matchPassword, validateString, validateWebsite } from "../../utility/validation";
 import { register } from '../../services/api';
-import {get_organization_details} from '../../services/api';
+import { getOrganization } from '../../services/api';
 import { withRouter } from 'react-router-dom';
 
 class Registration extends Component {
@@ -25,7 +25,7 @@ class Registration extends Component {
     }
 
   componentDidMount() {
-    get_organization_details()
+    getOrganization()
     .then(res => {
         this.setState({ 
             orgName: res.organizationName,
