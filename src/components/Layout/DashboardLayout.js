@@ -15,10 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import { Router } from 'react-router';
-import ContentRoutes from "./ContentRoutes";
 import EmployeeOnboard from "../EmployeeRegistration/EmployeeOnboard";
-import AddressForm from "../EmployeeRegistration/AddressForm";
 import Organization from "../registration/Registration";
 
 
@@ -131,7 +128,7 @@ export default function DashboardLayout() {
   let currentURL = window.location.href;
   
   let content;
-  switch(window.location.href){
+  switch(currentURL){
     case('http://localhost:3000/dashboard/employee_onboard'): 
       content = <EmployeeOnboard></EmployeeOnboard>
       break;

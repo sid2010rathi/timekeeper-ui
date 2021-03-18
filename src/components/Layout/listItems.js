@@ -2,59 +2,28 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const mainListItems = (
   <div>
-    <NavLink to="/login" >
+    <NavLink to={`/dashboard/employee_onboard`}>
       <ListItem button>
         <ListItemIcon>
-          <DashboardIcon />
+          <PeopleIcon />
         </ListItemIcon>
-        <ListItemText primary="Login" />
+        <ListItemText primary="Add Employee" />
       </ListItem>
-    </NavLink>
-
-    <NavLink to="/register">
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Register" />
-    </ListItem>
-    </NavLink>
-
-    <NavLink to={`/dashboard/employee_onboard`}>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Employee Onboard" />
-    </ListItem>
     </NavLink>  
 
     <NavLink to={`/dashboard/organization_update`}>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Organization Profile" />
-    </ListItem>
-    </NavLink>    
-
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Payroll" />
-    </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Update Organization" />
+      </ListItem>
+    </NavLink>
   </div>
 );
 
