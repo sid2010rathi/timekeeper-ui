@@ -68,7 +68,7 @@ export const employeeOnboard = async (data) => {
     console.log("Employee Onboard");
     console.log(organizationId);
 
-    const response = await fetch('http://localhost:5000/userscreation', {
+    const response = await fetch('http://localhost:5000/onboard', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -80,7 +80,6 @@ export const employeeOnboard = async (data) => {
             userPassword: data.userPassword,
             userRole: data.userRole,
             userOrganizationId:localStorage.getItem('organizationId')
-            
         })
     }).then((res) => res.json());
 
@@ -89,4 +88,33 @@ export const employeeOnboard = async (data) => {
     } else {
         return response
     }
+}
+
+export const employeeUpdate = async (data) => {
+    console.log("Update Employee API Called")
+    const token = localStorage.getItem('token')
+    const response = await fetch('http://localhost:5000/onboard', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer "+ token
+        },
+        body: JSON.stringify(data)
+    }).then((res) => res.json());
+
+    return response;
+}
+
+export const getEmployee = async () => {
+    console.log("Get Employee API Called")
+    const token = localStorage.getItem('token')
+    const response = await fetch('http://localhost:5000/onboard', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer "+ token
+        }
+    }).then((res) => res.json());
+
+    return response;
 }
