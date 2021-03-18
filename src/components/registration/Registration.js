@@ -1,8 +1,11 @@
 import { Component } from "react";
 import React from 'react';
+import '../../css/style.css';
+
 import { Container, Row, Col, Form, Button, Badge } from 'react-bootstrap';
 import { validateEmail, matchPassword, validateString, validateWebsite } from "../../utility/validation";
-import { register } from '../../services/api'
+import { register } from '../../services/api';
+import {get_organization_details} from '../../services/api';
 import { withRouter } from 'react-router-dom';
 
 class Registration extends Component {
@@ -21,6 +24,17 @@ class Registration extends Component {
         this.onSubmitForm = this.onSubmitForm.bind(this);
     }
 
+  componentDidMount() {
+    get_organization_details()
+    .then(res => {
+        this.setState({ 
+            orgName: res.organizationName,
+            orgSite: res.organizationWebsite,
+            email: res.username 
+          });
+    });
+}
+    
     onInputchange(event) {
         this.setState({
           [event.target.name]: event.target.value
@@ -63,7 +77,7 @@ class Registration extends Component {
     render() {
       const { history } = this.props;
         return(
-            <Container>
+            <Container className="organization_container">
                 <Row>
                     <Col />
                     <Col xs={6}>

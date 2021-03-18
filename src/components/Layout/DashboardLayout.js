@@ -19,6 +19,7 @@ import { Router } from 'react-router';
 import ContentRoutes from "./ContentRoutes";
 import EmployeeOnboard from "../EmployeeRegistration/EmployeeOnboard";
 import AddressForm from "../EmployeeRegistration/AddressForm";
+import Organization from "../registration/Registration";
 
 
 function Copyright() {
@@ -134,8 +135,8 @@ export default function DashboardLayout() {
     case('http://localhost:3000/dashboard/employee_onboard'): 
       content = <EmployeeOnboard></EmployeeOnboard>
       break;
-    case('http://localhost:3000/dashboard/address'):
-      content = <AddressForm></AddressForm>
+    case('http://localhost:3000/dashboard/organization_update'):
+      content = <Organization></Organization>
   }
   
   

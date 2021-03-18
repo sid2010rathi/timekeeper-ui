@@ -43,6 +43,23 @@ export const register = async (data) => {
     }
 }
 
+export const get_organization_details = async (data) => {
+    const organization_id = localStorage.getItem('organizationId');
+    console.log("Get Register Details");
+    const response = await fetch(`http://localhost:5000/organizations/${organization_id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((res) => res.json());
+
+    if(response.status === "ok") {
+        return response
+    } else {
+        return response
+    }
+}
+
 export const verifyCode = async (data) => {
     console.log("Verify code API");
 
