@@ -1,3 +1,5 @@
+
+
 export const login = async (data) => {
     console.log("Call Login API");
     const response = await fetch('http://localhost:5000/login', {
@@ -14,6 +16,7 @@ export const login = async (data) => {
     if(response.status === "ok") {
         localStorage.setItem('token', response.token);
         localStorage.setItem('organizationId', response.user.organizationId);
+        localStorage.setItem('userId', response.user._id);
         alert("Success");
     } else {
         alert("Error");
@@ -118,8 +121,8 @@ export const employeeUpdate = async (data) => {
 }
 
 export const getEmployee = async () => {
-    console.log("Get Employee API Called")
-    const token = localStorage.getItem('token')
+    console.log("Get Employee API Called");
+    const token = localStorage.getItem('token');
     const response = await fetch('http://localhost:5000/onboard', {
         method: 'GET',
         headers: {
@@ -129,4 +132,48 @@ export const getEmployee = async () => {
     }).then((res) => res.json());
 
     return response;
+}
+
+export const employeePunchIn = async (data) => {
+    console.log("Call attendence API");
+    const token = localStorage.getItem('token')
+    const organizationId = localStorage.getItem('organizationId');
+    const userId = localStorage.getItem('userId')
+    const response = await fetch('http://localhost:5000/attendence/in', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer "+ token
+        },
+        body: JSON.stringify({
+            userid: userId,
+            organizationid: organizationId
+        })
+    }).then((res) => res.json());
+
+    if(response.status === "ok") {
+        return response
+    } else {
+        return response
+    }
+}
+
+export const employeePunchOut = async (data) => {
+    console.log("Call attendence API");
+    const token = localStorage.getItem('token');
+    const organizationId = localStorage.getItem('organizationId');
+    const userId = localStorage.getItem('userId')
+    const response = await fetch('http://localhost:5000/attendence/out/'+userId+'/'+organizationId, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer "+ token
+        }
+    }).then((res) => res.json());
+
+    if(response.status === "ok") {
+        return response
+    } else {
+        return response
+    }
 }

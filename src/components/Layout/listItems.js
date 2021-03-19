@@ -3,10 +3,20 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PeopleIcon from '@material-ui/icons/People';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import { NavLink } from 'react-router-dom';
 
 export const mainListItems = (
   <div>
+    <NavLink to={`/dashboard/employee_attendence`}>
+      <ListItem button>
+        <ListItemIcon>
+        <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Punch IN/OUT" />
+      </ListItem>
+    </NavLink>
+
     <NavLink to={`/dashboard/employee_onboard`}>
       <ListItem button>
         <ListItemIcon>
