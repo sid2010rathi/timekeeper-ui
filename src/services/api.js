@@ -61,6 +61,31 @@ export const getOrganization = async (data) => {
     }
 }
 
+export const updateOrganization = async (data) => {
+    console.log("Call Register API");
+    const token = localStorage.getItem('token')
+    const organizationId = localStorage.getItem('organizationId')
+    const response = await fetch('http://localhost:5000/organizations/'+organizationId, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer "+ token            
+        },
+        body: JSON.stringify({
+            organizationName: data.orgName,
+            organizationWebsite: data.orgSite,
+            username: data.email,
+            password: data.password
+        })
+    }).then((res) => res.json());
+
+    if(response.status === "ok") {
+        return response
+    } else {
+        return response
+    }
+}
+
 export const verifyCode = async (data) => {
     console.log("Verify code API");
 
