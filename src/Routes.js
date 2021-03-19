@@ -11,6 +11,7 @@ import VerifyAccount from "./components/registration/VerifyAccount";
 import DashboardLayout from "./components/Layout/DashboardLayout";
 import EmployeeOnboard from "./components/EmployeeRegistration/EmployeeOnboard";
 import EmployeeUpdate from "./components/EmployeeUpdateComponent";
+import EmployeeScheduling from "./components/EmployeeScheduling/EmployeeScheduling";
 
 const Routes = (props) => (
   <Router {...props}>
@@ -24,6 +25,7 @@ const Routes = (props) => (
       </Route>
       <Route path="/dashboard" component={DashboardLayout} />
       <Route path="/update" component={EmployeeUpdate} />
+      <Route path="/schedule" component={EmployeeScheduling} />
     </Switch>
   </Router>
 );
