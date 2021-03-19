@@ -6,6 +6,7 @@ import { Container, Row, Col, Form, Button, Badge } from 'react-bootstrap';
 import { validateEmail, matchPassword, validateString, validateWebsite } from "../../utility/validation";
 import { register } from '../../services/api';
 import { getOrganization } from '../../services/api';
+import {updateOrganization} from '../../services/api';
 import { withRouter } from 'react-router-dom';
 
 class Registration extends Component {
@@ -21,7 +22,8 @@ class Registration extends Component {
 
         };
         this.onInputchange = this.onInputchange.bind(this);
-        this.onSubmitForm = this.onSubmitForm.bind(this);
+        this.createOrganization = this.createOrganization.bind(this);
+        this.updateOrganization = this.updateOrganization.bind(this);
     }
 
   componentDidMount() {
@@ -41,7 +43,7 @@ class Registration extends Component {
         });
     }
 
-    onSubmitForm() {
+    createOrganization() {
       const { history } = this.props;
       let data = {};
       //validate inputs
@@ -72,6 +74,39 @@ class Registration extends Component {
           }
         });
       }
+    }
+
+    updateOrganization(){
+      const { history } = this.props;
+      let data = {};
+      //validate inputs
+      if(validateEmail(this.state.email)) {
+        data.email = this.state.email;
+      }
+
+      if(matchPassword(this.state.password, this.state.confPassword)) {
+        data.password = this.state.password;
+      }
+
+      if(validateString(this.state.orgName)) {
+        data.orgName = this.state.orgName;
+      }
+
+      if(validateWebsite(this.state.orgSite)) {
+        data.orgSite = this.state.orgSite;
+      }
+      
+      if(1==1) {
+        updateOrganization(data).then((response)=>{          
+          alert("Successfully updated")
+          if(response.status === "ok" && history) {
+            console.log("Successfully updated");
+          } else {
+            alert("Try Again")
+          }
+        });
+      }
+
     }
 
     render() {
@@ -113,7 +148,8 @@ class Registration extends Component {
                           </Row>
                         </Form.Group>
                         <Form.Group>
-                          <Button variant="primary" onClick={this.onSubmitForm}>Register</Button>
+                          <Button variant="primary" onClick={this.createOrganization}>Register</Button>
+                          <Button variant="primary" onClick={this.updateOrganization}>Update</Button>
                         </Form.Group>
                       </Form>
                     </Col>
