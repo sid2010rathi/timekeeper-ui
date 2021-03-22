@@ -119,7 +119,7 @@ class Registration extends Component {
                       <h3>
                         <Badge variant="secondary">Registration</Badge>
                       </h3>
-                      <Form>
+                      <Form autoComplete="off">
                         <Form.Group>
                           <Row>
                             <Col>
