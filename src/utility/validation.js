@@ -1,15 +1,15 @@
 export const validateEmail = (email) => {
-    if(email.length > 0) {
-        return true;
-    }
-    return false;
+    const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(email);
 }
 
 export const validatePassword = (password) => {
-    if(password.length > 0) {
-        return true;
-    }
-    return false;
+    const regex =/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    /*
+    (?=.*[0-9]) - Assert a string has at least one number;
+    (?=.*[!@#$%^&*]) - Assert a string has at least one special character.
+     */
+    return regex.test(password);
 }
 
 export const matchPassword = (password, confPassword) => {
@@ -35,6 +35,21 @@ export const validateWebsite = (website) => {
 
 export const validateCode = (code) => {
     if(code.length === 6) {
+        return true;
+    }
+    return false;
+}
+
+export const validateFirstName = (firstname) => {
+    if(firstname.length > 1) {
+        return true;
+    }
+    return false;
+}
+
+
+export const validateLastName = (lastname) => {
+    if(lastname.length > 1) {
         return true;
     }
     return false;
