@@ -1,30 +1,40 @@
-import React from "react";
-import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-} from "react-router-dom";
-import Login from "./components/login/Login";
-import Registration from "./components/registration/Registration";
-import VerifyAccount from "./components/registration/VerifyAccount";
-import DashboardLayout from "./components/Layout/DashboardLayout";
-import EmployeeOnboard from "./components/EmployeeRegistration/EmployeeOnboard";
-import EmployeeUpdate from "./components/EmployeeUpdateComponent";
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import DashboardLayout from './layouts/DashboardLayout';
+// import MainLayout from 'src/layouts/MainLayout';
+// import AccountView from 'src/views/account/AccountView';
+// import CustomerListView from 'src/views/customer/CustomerListView';
+import DashboardView from './views/DashboardView';
+// import LoginView from 'src/views/auth/LoginView';
+// import NotFoundView from 'src/views/errors/NotFoundView';
+// import ProductListView from 'src/views/product/ProductListView';
+// import RegisterView from 'src/views/auth/RegisterView';
+// import SettingsView from 'src/views/settings/SettingsView';
 
-const Routes = (props) => (
-  <Router {...props}>
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Registration} />
-      <Route path="/verify" component={VerifyAccount} />
-      {/* <Route path="/employee_onboard" component={EmployeeOnboard} /> */}
-      <Route exact path="/">
-        <Redirect to="/login" />
-      </Route>
-      <Route path="/dashboard" component={DashboardLayout} />
-      <Route path="/update" component={EmployeeUpdate} />
-    </Switch>
-  </Router>
-);
-export default Routes;
+const routes = [
+  {
+    path: 'app',
+    element: <DashboardLayout />,
+    children: [
+      // { path: 'account', element: <AccountView /> },
+      // { path: 'customers', element: <CustomerListView /> },
+      { path: 'dashboard', element: <DashboardView /> },
+      // { path: 'products', element: <ProductListView /> },
+      // { path: 'settings', element: <SettingsView /> },
+      // { path: '*', element: <Navigate to="/404" /> }
+    ]
+  },
+  // {
+  //   path: '/',
+  //   element: <MainLayout />,
+  //   children: [
+  //     { path: 'login', element: <LoginView /> },
+  //     { path: 'register', element: <RegisterView /> },
+  //     { path: '404', element: <NotFoundView /> },
+  //     { path: '/', element: <Navigate to="/app/dashboard" /> },
+  //     { path: '*', element: <Navigate to="/404" /> }
+  //   ]
+  // }
+];
+
+export default routes;
