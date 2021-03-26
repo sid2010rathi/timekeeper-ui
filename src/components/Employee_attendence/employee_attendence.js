@@ -15,6 +15,8 @@ import Container from '@material-ui/core/Container';
 import { validateEmail, validatePassword } from '../../utility/validation';
 import { login } from '../../services/api';
 import { NavLink } from 'react-router-dom';
+import {employeePunchIn} from '../../services/api';
+import {employeePunchOut} from '../../services/api';
 
 function Copyright() {
   return (
@@ -51,29 +53,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [remember, setRemember] = useState();
-
   const classes = useStyles();
 
-  const onSubmitForm = (event) => {
+  const onPunchIn = (event) => {
     event.preventDefault();
-    let data = {};
-    //validate inputs
-    if(validateEmail(email)) {
-        data.email = email;
-    }
+    employeePunchIn();    
+  }
 
-    if(validatePassword(password)) {
-        data.password = password;
-    }
-    console.log(data);
-    
-    if(Object.keys(data).length > 1) {
-        login(data);
-    }
-}
+  const onPunchOut = (event) =>{
+    event.preventDefault();
+    employeePunchOut();
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -83,58 +73,28 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Punch IN/OUT
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmitForm}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={event => setEmail(event.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={event => setPassword(event.target.value)}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-            onChange={event => setRemember(event.target.value)}
-          />
+        <form className={classes.form} noValidate >   
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}>
-            Sign In
+            className={classes.submit}
+            onClick={onPunchIn}>
+            Punch In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <NavLink to="#" variant="body2">
-                Forgot password?
-              </NavLink>
-            </Grid>
-            <Grid item>
-              <NavLink to="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </NavLink>
-            </Grid>
-          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={onPunchOut}>
+            Punch Out
+          </Button>
+          
         </form>
       </div>
       <Box mt={8}>

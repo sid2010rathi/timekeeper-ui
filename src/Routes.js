@@ -10,6 +10,7 @@ import Registration from "./components/registration/Registration";
 import VerifyAccount from "./components/registration/VerifyAccount";
 import DashboardLayout from "./components/Layout/DashboardLayout";
 import EmployeeOnboard from "./components/EmployeeRegistration/EmployeeOnboard";
+import EmployeeUpdate from "./components/EmployeeUpdateComponent";
 
 const Routes = (props) => (
   <Router {...props}>
@@ -26,6 +27,7 @@ const Routes = (props) => (
         <Redirect to="/login" />
       </Route>
       <Route path="/dashboard" component={DashboardLayout} />
+      <Route path="/update" component={EmployeeUpdate} />
     </Switch>
   </Router>
 );
