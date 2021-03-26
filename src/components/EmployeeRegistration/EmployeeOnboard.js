@@ -204,7 +204,7 @@ export default function Login() {
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
-              value={userRole}
+              value={role}
               onChange={handleChange}
               label="Role"
             >
