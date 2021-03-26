@@ -139,17 +139,6 @@ const handleChange = (event) => {
             
             onChange={event => setPassword(event.target.value)}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="userRole"
-            label="User Role"
-            id="userRole"
-            
-            onChange={event => setRole(event.target.value)}
-          />
           
           <FormControl variant="outlined" className={classes.form}>
             <InputLabel id="demo-simple-select-outlined-label">Role</InputLabel>

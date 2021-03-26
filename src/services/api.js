@@ -85,7 +85,7 @@ export const employeeOnboard = async (data) => {
     console.log("Employee Onboard");
     console.log(organizationId);
 
-    const response = await fetch('http://localhost:5000/userscreation', {
+    const response = await fetch('http://localhost:5000/onboard', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
