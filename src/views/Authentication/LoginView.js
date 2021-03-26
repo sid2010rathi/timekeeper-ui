@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -15,6 +15,8 @@ import {
 // import FacebookIcon from 'src/icons/Facebook';
 // import GoogleIcon from 'src/icons/Google';
 import Page from '../../componenets/Page';
+import { validateEmail, validatePassword } from '../../utility/validation';
+import { login } from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,8 +28,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginView = () => {
-  const classes = useStyles();
-  const navigate = useNavigate();
+    const classes = useStyles();
+    const navigate = useNavigate();
+  
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    // const [remember, setRemember] = useState();
+  
+    const onSubmitForm = (event) => {
+        event.preventDefault();
+        let data = {};
+        //validate inputs
+        if(validateEmail(email)) {
+            data.email = email;
+        }
+
+        if(validatePassword(password)) {
+            data.password = password;
+        }
+        console.log("Inside form submit.");
+        console.log(data);
+    
+        if(Object.keys(data).length > 1) {
+            login(data);
+        }
+    }
 
   return (
     <Page
@@ -63,7 +88,7 @@ const LoginView = () => {
               touched,
               values
             }) => (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={onSubmitForm}>
                 <Box mb={3}>
                   <Typography
                     color="textPrimary"
@@ -135,10 +160,11 @@ const LoginView = () => {
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
-                  onChange={handleChange}
                   type="email"
                   value={values.email}
                   variant="outlined"
+                  autoFocus
+                  onChange={event => setEmail(event.target.value)}
                 />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
@@ -148,10 +174,10 @@ const LoginView = () => {
                   margin="normal"
                   name="password"
                   onBlur={handleBlur}
-                  onChange={handleChange}
                   type="password"
                   value={values.password}
                   variant="outlined"
+                  onChange={event => setPassword(event.target.value)}
                 />
                 <Box my={2}>
                   <Button
