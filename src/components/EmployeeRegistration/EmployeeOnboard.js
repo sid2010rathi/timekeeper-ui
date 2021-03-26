@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -12,6 +13,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from "@material-ui/core/InputLabel";
+
+
 import { employeeOnboard } from '../../services/api';
 
 function Copyright() {
@@ -71,7 +77,14 @@ export default function Login() {
     if(Object.keys(data).length > 1) {
       employeeOnboard(data);
     }
+
+    
 }
+
+const handleChange = (event) => {
+  setRole(event.target.value);
+};
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -137,6 +150,21 @@ export default function Login() {
             
             onChange={event => setRole(event.target.value)}
           />
+          
+          <FormControl variant="outlined" className={classes.form}>
+            <InputLabel id="demo-simple-select-outlined-label">Role</InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              value={userRole}
+              onChange={handleChange}
+              label="Role"
+            >
+              <MenuItem value={"Employee"}>Employee</MenuItem>
+              <MenuItem value={"Supervisor"}>Supervisor</MenuItem>
+              
+            </Select>
+      </FormControl>
           
           <Button
             type="submit"

@@ -13,14 +13,6 @@ import { Link, NavLink } from 'react-router-dom';
 
 export const mainListItems = (
   <div>
-    <NavLink to="/login" >
-      <ListItem button>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Login" />
-      </ListItem>
-    </NavLink>
 
     <NavLink to="/register">
     <ListItem button>
@@ -33,8 +25,6 @@ export const mainListItems = (
 
 
     <NavLink to={`/dashboard/employee_onboard`}>
-
-
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />
