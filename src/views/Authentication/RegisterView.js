@@ -43,16 +43,17 @@ const RegisterView = () => {
           <Formik
             initialValues={{
               email: '',
-              firstName: '',
-              lastName: '',
+              organizationName: '',
+              organizationWebsite: '',
               password: '',
+              confirmPassword: '',
               policy: false
             }}
             validationSchema={
               Yup.object().shape({
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
+                organizationName: Yup.string().max(255).required('Organization name is required'),
+                organizationWebsite: Yup.string().max(255).required('Organization website is required'),
                 password: Yup.string().max(255).required('password is required'),
                 policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
@@ -87,27 +88,27 @@ const RegisterView = () => {
                   </Typography>
                 </Box>
                 <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
+                  error={Boolean(touched.organizationName && errors.organizationName)}
                   fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="First name"
+                  helperText={touched.organizationName && errors.organizationName}
+                  label="Organization name"
                   margin="normal"
-                  name="firstName"
+                  name="organizationName"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
+                  value={values.organizationName}
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
+                  error={Boolean(touched.organizationWebsite && errors.organizationWebsite)}
                   fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label="Last name"
+                  helperText={touched.organizationWebsite && errors.organizationWebsite}
+                  label="Website"
                   margin="normal"
-                  name="lastName"
+                  name="organizationWebsite"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.lastName}
+                  value={values.organizationWebsite}
                   variant="outlined"
                 />
                 <TextField
@@ -134,6 +135,19 @@ const RegisterView = () => {
                   onChange={handleChange}
                   type="password"
                   value={values.password}
+                  variant="outlined"
+                />
+                <TextField
+                  error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+                  fullWidth
+                  helperText={touched.confirmPassword && errors.confirmPassword}
+                  label="Confirm Password"
+                  margin="normal"
+                  name="confirmPassword"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="password"
+                  value={values.confirmPassword}
                   variant="outlined"
                 />
                 <Box

@@ -39,14 +39,19 @@ const LoginView = () => {
         event.preventDefault();
         let data = {};
         //validate inputs
-        if(validateEmail(email)) {
+        alert(password)
+        /*if(validateEmail(email)) {
             data.email = email;
         }
 
         if(validatePassword(password)) {
             data.password = password;
+        }*/
+        data = {
+          email, password
         }
         console.log("Inside form submit.");
+        console.log(email);
         console.log(data);
     
         if(Object.keys(data).length > 1) {
@@ -101,7 +106,7 @@ const LoginView = () => {
                     gutterBottom
                     variant="body2"
                   >
-                    {/* Sign in on the internal platform */}
+                    Sign in with email address
                   </Typography>
                 </Box>
                 {/* <Grid
@@ -144,13 +149,13 @@ const LoginView = () => {
                   mt={3}
                   mb={1}
                 >
-                  <Typography
+                  {/* <Typography
                     align="center"
                     color="textSecondary"
                     variant="body1"
                   >
                     Login with email address
-                  </Typography>
+                  </Typography> */}
                 </Box>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
@@ -161,7 +166,6 @@ const LoginView = () => {
                   name="email"
                   onBlur={handleBlur}
                   type="email"
-                  value={values.email}
                   variant="outlined"
                   autoFocus
                   onChange={event => setEmail(event.target.value)}
@@ -175,7 +179,6 @@ const LoginView = () => {
                   name="password"
                   onBlur={handleBlur}
                   type="password"
-                  value={values.password}
                   variant="outlined"
                   onChange={event => setPassword(event.target.value)}
                 />
