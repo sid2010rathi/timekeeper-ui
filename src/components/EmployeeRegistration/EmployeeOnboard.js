@@ -200,13 +200,13 @@ export default function Login() {
               onChange={event => handlePassword(event)}
             />
             <FormControl variant="outlined" className={classes.form}>
-            <InputLabel id="demo-simple-select-outlined-label">Role</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">Role*</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
-              value={userRole}
+              value={role}
               onChange={handleChange}
-              label="Role"
+              label="Role*"
             >
               <MenuItem value={"Employee"}>Employee</MenuItem>
               <MenuItem value={"Supervisor"}>Supervisor</MenuItem>

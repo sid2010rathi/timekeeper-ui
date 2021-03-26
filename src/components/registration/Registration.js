@@ -108,9 +108,17 @@ class Registration extends Component {
       }
 
     }
-
+    
+    
     render() {
       const { history } = this.props;
+      let submit_button;
+      if(this.state.email != undefined){
+        submit_button = <Button variant="primary" onClick={this.updateOrganization}>Update</Button> 
+      }
+      else if(this.state.email == undefined){
+        submit_button = <Button variant="primary" onClick={this.createOrganization}>Register</Button>
+      }
         return(
             <Container className="organization_container">
                 <Row>
@@ -119,7 +127,7 @@ class Registration extends Component {
                       <h3>
                         <Badge variant="secondary">Registration</Badge>
                       </h3>
-                      <Form>
+                      <Form autoComplete="off">
                         <Form.Group>
                           <Row>
                             <Col>
@@ -148,8 +156,8 @@ class Registration extends Component {
                           </Row>
                         </Form.Group>
                         <Form.Group>
-                          <Button variant="primary" onClick={this.createOrganization}>Register</Button>
-                          <Button variant="primary" onClick={this.updateOrganization}>Update</Button>
+                          {submit_button}
+                          
                         </Form.Group>
                       </Form>
                     </Col>
