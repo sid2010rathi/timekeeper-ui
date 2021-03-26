@@ -8,6 +8,17 @@ import { NavLink } from 'react-router-dom';
 
 export const mainListItems = (
   <div>
+
+    <NavLink to="/register">
+    <ListItem button>
+      <ListItemIcon>
+        <PeopleIcon />
+      </ListItemIcon>
+      <ListItemText primary="Register" />
+    </ListItem>
+    </NavLink>
+
+
     <NavLink to={`/dashboard/employee_attendence`}>
       <ListItem button>
         <ListItemIcon>
