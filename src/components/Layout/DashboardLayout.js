@@ -17,6 +17,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import EmployeeOnboard from "../EmployeeRegistration/EmployeeOnboard";
 import Organization from "../registration/Registration";
+import EmployeeAttendence from "../Employee_attendence/employee_attendence";
 
 
 function Copyright() {
@@ -134,6 +135,9 @@ export default function DashboardLayout() {
       break;
     case('http://localhost:3000/dashboard/organization_update'):
       content = <Organization></Organization>
+      break;
+    case('http://localhost:3000/dashboard/employee_attendence'):
+      content = <EmployeeAttendence></EmployeeAttendence>
   }
   
   
