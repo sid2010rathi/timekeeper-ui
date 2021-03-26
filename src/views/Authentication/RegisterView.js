@@ -103,7 +103,7 @@ const RegisterView = () => {
                   error={Boolean(touched.organizationWebsite && errors.organizationWebsite)}
                   fullWidth
                   helperText={touched.organizationWebsite && errors.organizationWebsite}
-                  label="Website"
+                  label="Organization website"
                   margin="normal"
                   name="organizationWebsite"
                   onBlur={handleBlur}
