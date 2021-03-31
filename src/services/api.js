@@ -1,6 +1,7 @@
 
 
 export const login = async (data) => {
+    alert("2")
     console.log("Call Login API");
     const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
@@ -21,6 +22,7 @@ export const login = async (data) => {
     } else {
         alert("Error");
     }
+    return response;
 }
 
 export const register = async (data) => {

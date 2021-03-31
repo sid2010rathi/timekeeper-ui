@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import { validateEmail, validatePassword } from '../../utility/validation';
 import { login } from '../../services/api';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../context/authContext'
 
 function Copyright() {
   return (
@@ -54,10 +55,12 @@ export default function Login() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [remember, setRemember] = useState();
+    const [signin] = useAuth();
 
   const classes = useStyles();
 
   const onSubmitForm = (event) => {
+    alert("1")
     event.preventDefault();
     let data = {};
     //validate inputs
@@ -71,7 +74,12 @@ export default function Login() {
     console.log(data);
     
     if(Object.keys(data).length > 1) {
-        login(data);
+        login(data).then((response) => {
+          if(response.status === "ok") 
+          {
+            signin
+          }
+        });
     }
 }
 

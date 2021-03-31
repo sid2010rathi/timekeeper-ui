@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Routes from "./Routes";
-
+import App from "./App";
+import { AuthProvider } from './context/authContext'
 ReactDOM.render(
-  <Routes />,
+  <AuthProvider>
+    <App />
+  </AuthProvider>,
   document.getElementById('root')
 );
 

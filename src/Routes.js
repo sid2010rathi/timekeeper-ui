@@ -19,10 +19,6 @@ const Routes = (props) => (
       <Route path="/register" component={Registration} />
       <Route path="/verify" component={VerifyAccount} />
 
-      {/* <Route path="/employee_onboard" component={EmployeeOnboard} /> */}
-
-      
-
       <Route exact path="/">
         <Redirect to="/login" />
       </Route>
@@ -31,4 +27,26 @@ const Routes = (props) => (
     </Switch>
   </Router>
 );
-export default Routes;
+
+export const UnauthenticatedRoutes = (props) => {
+  <Router {...props}>
+    <Switch>
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Registration} />
+      <Route path="/verify" component={VerifyAccount} />
+
+      <Route exact path="/">
+        <Redirect to="/login" />
+      </Route>
+    </Switch>
+  </Router>
+}
+
+export const AuthenticatedRoutes = (props) => (
+  <Router {...props}>
+    <Switch>
+      <Route path="/dashboard" component={DashboardLayout} />
+      <Route path="/update" component={EmployeeUpdate} />
+    </Switch>
+  </Router>
+);
