@@ -55,7 +55,7 @@ export default function Login() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [remember, setRemember] = useState();
-    const [signin] = useAuth();
+    const {signin} = useAuth();
 
   const classes = useStyles();
 
@@ -77,7 +77,7 @@ export default function Login() {
         login(data).then((response) => {
           if(response.status === "ok") 
           {
-            signin
+            signin()
           }
         });
     }

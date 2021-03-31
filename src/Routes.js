@@ -29,7 +29,8 @@ const Routes = (props) => (
 );
 
 export const UnauthenticatedRoutes = (props) => {
-  <Router {...props}>
+  return(
+    <Router {...props}>
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Registration} />
@@ -40,13 +41,17 @@ export const UnauthenticatedRoutes = (props) => {
       </Route>
     </Switch>
   </Router>
+  )
+  
 }
 
-export const AuthenticatedRoutes = (props) => (
+export const AuthenticatedRoutes = (props) => {
+  return(
   <Router {...props}>
     <Switch>
       <Route path="/dashboard" component={DashboardLayout} />
       <Route path="/update" component={EmployeeUpdate} />
     </Switch>
   </Router>
-);
+  )
+}
