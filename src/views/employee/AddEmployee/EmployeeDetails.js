@@ -105,9 +105,6 @@ const EmployeeDetails = ({ className, ...rest }) => {
       setPhone(event.target.value)
     }
   }
-  const handleChange = (event) => {
-    setRole(event.target.value);
-  }
 
   const onSubmitForm = (event) => {
     event.preventDefault();
