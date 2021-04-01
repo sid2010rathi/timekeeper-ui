@@ -10,6 +10,7 @@ import LoginView from './views/Authentication/LoginView';
 // import NotFoundView from 'src/views/errors/NotFoundView';
 // import ProductListView from 'src/views/product/ProductListView';
 import RegisterView from './views/Authentication/RegisterView';
+import VerifyAccountView from './views/Authentication/VerifyAccountView';
 // import SettingsView from 'src/views/settings/SettingsView';
 
 const routes = [
@@ -32,6 +33,7 @@ const routes = [
     children: [
       { path: 'login', element: <LoginView /> },
       { path: 'register', element: <RegisterView /> },
+      { path: 'verify', element: <VerifyAccountView /> },
       // { path: '404', element: <NotFoundView /> },
       { path: '/', element: <Navigate to="/app/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }

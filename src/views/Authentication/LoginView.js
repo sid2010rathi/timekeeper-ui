@@ -17,6 +17,8 @@ import {
 import Page from '../../componenets/Page';
 import { validateEmail, validatePassword } from '../../utility/validation';
 import { login } from '../../services/api';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,35 +29,70 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const LoginView = () => {
     const classes = useStyles();
     const navigate = useNavigate();
   
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState();
     // const [remember, setRemember] = useState();
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpen(false);
+    };
+
+    const handleEmail = (event) => {
+      if(!validateEmail(event.target.value)) {
+        setOpen(true);
+        setMessage("Please Enter Valid Email Address")
+      } else {
+        setOpen(false);
+        setEmail(event.target.value)
+      }
+    }
+
+    const handlePassword = (event) => {
+      if(!validatePassword(event.target.value)) {
+        setOpen(true);
+        setMessage("Please Enter Valid Password")
+      } else {
+        setOpen(false);
+        setPassword(event.target.value)
+      }
+    }
   
     const onSubmitForm = (event) => {
         event.preventDefault();
-        let data = {};
-        //validate inputs
-        alert(password)
-        /*if(validateEmail(email)) {
-            data.email = email;
-        }
-
-        if(validatePassword(password)) {
-            data.password = password;
-        }*/
-        data = {
-          email, password
-        }
-        console.log("Inside form submit.");
-        console.log(email);
-        console.log(data);
-    
-        if(Object.keys(data).length > 1) {
-            login(data);
+        let data = {
+          email,
+          password
+        };
+  
+        const result = Object.values(data).filter((element) => element === undefined)
+        if(result.length > 0) {
+          setOpen(true);
+          setMessage("Please Verify all details")
+        } else {
+          login(data).then((response) => {
+            if(response.status === "ok") {
+              localStorage.setItem('token', response.token);
+              localStorage.setItem('organizationId', response.user.organizationId);
+              localStorage.setItem('userId', response.user._id);
+              navigate('/app/dashboard', { replace: true });
+            } else {
+              setOpen(true);
+              setMessage("Please try again!!")
+            }
+          });
         }
     }
 
@@ -71,6 +108,11 @@ const LoginView = () => {
         justifyContent="center"
       >
         <Container maxWidth="sm">
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error">
+              {message}
+            </Alert>
+          </Snackbar>
           <Formik
             initialValues={{
               email: 'demo@devias.io',
@@ -168,7 +210,7 @@ const LoginView = () => {
                   type="email"
                   variant="outlined"
                   autoFocus
-                  onChange={event => setEmail(event.target.value)}
+                  onChange={event => handleEmail(event)}
                 />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
@@ -180,7 +222,7 @@ const LoginView = () => {
                   onBlur={handleBlur}
                   type="password"
                   variant="outlined"
-                  onChange={event => setPassword(event.target.value)}
+                  onChange={event => handlePassword(event)}
                 />
                 <Box my={2}>
                   <Button

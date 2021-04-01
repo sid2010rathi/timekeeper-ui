@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -14,6 +14,10 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from '../../componenets/Page';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { validateEmail, validatePassword, validateString, validateWebsite, matchPassword } from '../../utility/validation'
+import { register } from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,9 +28,105 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+
+  const [organizationName, setOrganizationName] = useState();
+  const [organizationWebsite, setOrganizationWebsite] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleOrganizationName = (event) => {
+    if(!validateString(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Name")
+    } else {
+      setOpen(false);
+      setOrganizationName(event.target.value)
+    }
+  }
+
+  const handleOrganizationWebsite = (event) => {
+    if(!validateWebsite(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Website URL")
+    } else {
+      setOpen(false);
+      setOrganizationWebsite(event.target.value)
+    }
+  }
+
+  const handleEmail = (event) => {
+    if(!validateEmail(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Email Address")
+    } else {
+      setOpen(false);
+      setEmail(event.target.value)
+    }
+  }
+
+  const handlePassword = (event) => {
+    if(!validatePassword(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Password")
+    } else {
+      setOpen(false);
+      setPassword(event.target.value)
+    }
+  }
+
+  const handleConfirmPassword = (event) => {
+    if(!validatePassword(event.target.value) && !matchPassword(password, event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Password")
+    } else {
+      setOpen(false);
+      setConfirmPassword(event.target.value)
+    }
+  }
+
+  const onSubmitForm = (event) => {
+    event.preventDefault();
+    let data = {
+      organizationName,
+      organizationWebsite,
+      email,
+      confirmPassword
+    };
+
+    const result = Object.values(data).filter((element) => element === undefined)
+    if(result.length > 0) {
+      setOpen(true);
+      setMessage("Please Verify all details")
+    } else {
+      setOpen(false);
+      register(data).then((response)=>{
+        if(response.status === "ok") {
+          localStorage.setItem("username", response.data.username);
+          navigate('/verify', { replace: true });
+        } else {
+          setOpen(true);
+          setMessage("Please Try Again!!")
+        }
+      });
+    }
+  }
 
   return (
     <Page
@@ -40,6 +140,11 @@ const RegisterView = () => {
         justifyContent="center"
       >
         <Container maxWidth="sm">
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error">
+            {message}
+          </Alert>
+        </Snackbar>
           <Formik
             initialValues={{
               email: '',
@@ -48,18 +153,6 @@ const RegisterView = () => {
               password: '',
               confirmPassword: '',
               policy: false
-            }}
-            validationSchema={
-              Yup.object().shape({
-                email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                organizationName: Yup.string().max(255).required('Organization name is required'),
-                organizationWebsite: Yup.string().max(255).required('Organization website is required'),
-                password: Yup.string().max(255).required('password is required'),
-                policy: Yup.boolean().oneOf([true], 'This field must be checked')
-              })
-            }
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
             }}
           >
             {({
@@ -71,20 +164,13 @@ const RegisterView = () => {
               touched,
               values
             }) => (
-              <form onSubmit={handleSubmit}>
-                <Box mb={3}>
+              <form noValidate onSubmit={onSubmitForm} autoComplete="off">
+                <Box mb={-2}>
                   <Typography
                     color="textPrimary"
                     variant="h2"
                   >
-                    Create new account
-                  </Typography>
-                  <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
-                  >
-                    Use your email to create new account
+                    Register Your Organization
                   </Typography>
                 </Box>
                 <TextField
@@ -95,8 +181,7 @@ const RegisterView = () => {
                   margin="normal"
                   name="organizationName"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.organizationName}
+                  onChange={event => handleOrganizationName(event)}
                   variant="outlined"
                 />
                 <TextField
@@ -107,8 +192,7 @@ const RegisterView = () => {
                   margin="normal"
                   name="organizationWebsite"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.organizationWebsite}
+                  onChange={event => handleOrganizationWebsite(event)}
                   variant="outlined"
                 />
                 <TextField
@@ -119,9 +203,8 @@ const RegisterView = () => {
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
-                  onChange={handleChange}
+                  onChange={event => handleEmail(event)}
                   type="email"
-                  value={values.email}
                   variant="outlined"
                 />
                 <TextField
@@ -132,9 +215,8 @@ const RegisterView = () => {
                   margin="normal"
                   name="password"
                   onBlur={handleBlur}
-                  onChange={handleChange}
+                  onChange={event => handlePassword(event)}
                   type="password"
-                  value={values.password}
                   variant="outlined"
                 />
                 <TextField
@@ -145,9 +227,8 @@ const RegisterView = () => {
                   margin="normal"
                   name="confirmPassword"
                   onBlur={handleBlur}
-                  onChange={handleChange}
+                  onChange={event => handleConfirmPassword(event)}
                   type="password"
-                  value={values.confirmPassword}
                   variant="outlined"
                 />
                 <Box

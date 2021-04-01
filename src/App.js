@@ -5,7 +5,7 @@ import { ThemeProvider } from '@material-ui/core';
 import GlobalStyles from './componenets/GlobalStyles';
 // import 'src/mixins/chartjs';
 import theme from './theme';
-import routes from './routes';
+import routes from './Routes';
 
 const App = () => {
   const routing = useRoutes(routes);

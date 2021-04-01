@@ -13,10 +13,7 @@ export const validatePassword = (password) => {
 }
 
 export const matchPassword = (password, confPassword) => {
-    if(validatePassword(password) && validatePassword(confPassword)) {
-        return password === confPassword ? true : false;
-    }
-    return false;
+    return password === confPassword ? true : false;
 }
 
 export const validateString = (string) => {
@@ -27,10 +24,8 @@ export const validateString = (string) => {
 }
 
 export const validateWebsite = (website) => {
-    if(website.length > 0) {
-        return true;
-    }
-    return false;
+    const regex = /^((https?):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/;
+    return regex.test(website);
 }
 
 export const validateCode = (code) => {
@@ -53,4 +48,11 @@ export const validateLastName = (lastname) => {
         return true;
     }
     return false;
+}
+
+export const validateNumber = (number) => {
+    if(isNaN(number) && number.length < 5) {
+        return false;
+    }
+    return true;
 }

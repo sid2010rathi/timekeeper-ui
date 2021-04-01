@@ -12,15 +12,7 @@ export const login = async (data) => {
             password:data.password
         })
     }).then((res) => res.json());
-
-    if(response.status === "ok") {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('organizationId', response.user.organizationId);
-        localStorage.setItem('userId', response.user._id);
-        alert("Success");
-    } else {
-        alert("Error");
-    }
+    return response;
 }
 
 export const register = async (data) => {
@@ -31,10 +23,10 @@ export const register = async (data) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            organizationName: data.orgName,
-            organizationWebsite: data.orgSite,
+            organizationName: data.organizationName,
+            organizationWebsite: data.organizationWebsite,
             username: data.email,
-            password: data.password
+            password: data.confirmPassword
         })
     }).then((res) => res.json());
 
