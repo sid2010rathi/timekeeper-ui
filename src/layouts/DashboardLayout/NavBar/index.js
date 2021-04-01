@@ -41,6 +41,11 @@ const items = [
     icon: UsersIcon,
     title: 'Employees'
   },
+  {
+    href: '/app/add-employee',
+    icon: UsersIcon,
+    title: 'Add Employee'
+  },
   // {
   //   href: '/app/products',
   //   icon: ShoppingBagIcon,

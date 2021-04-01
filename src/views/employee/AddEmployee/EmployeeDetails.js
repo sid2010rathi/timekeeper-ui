@@ -12,19 +12,21 @@ import {
   TextField,
   makeStyles
 } from '@material-ui/core';
+import { employeeOnboard } from '../../../services/api';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import {
+  validateEmail,
+  validatePassword,
+  validateFirstName,
+  validateLastName,
+  validatePhone
+} from '../../../utility/validation'
 
-const states = [
+const roles = [
   {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
+    value: 'Employee',
+    label: 'Employee'
   }
 ];
 
@@ -32,32 +34,117 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const EmployeeDetails = ({ className, ...rest }) => {
   const classes = useStyles();
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
+  const [firstName, setFirstname] = useState();
+  const [lastName, setLastname] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [phone, setPhone] = useState();
+  const [role, setRole] = useState();
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState();
 
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
+
+  const handleEmail = (event) => {
+    if(!validateEmail(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Email Address")
+    } else {
+      setOpen(false);
+      setEmail(event.target.value)
+    }
+  }
+
+  const handlePassword = (event) => {
+    if(!validatePassword(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Password")
+    } else {
+      setOpen(false);
+      setPassword(event.target.value)
+    }
+  }
+
+  const handleFirstName = (event) => {
+    if(!validateFirstName(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid First Name")
+    } else {
+      setOpen(false);
+      setFirstname(event.target.value)
+    }
+  }
+
+  const handleLastName = (event) => {
+    if(!validateLastName(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Last Name")
+    } else {
+      setOpen(false);
+      setLastname(event.target.value)
+    }
+  }
+
+  const handlePhone = (event) => {
+    if(!validatePhone(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Phone number")
+    } else {
+      setOpen(false);
+      setPhone(event.target.value)
+    }
+  }
+  const handleChange = (event) => {
+    setRole(event.target.value);
+  }
+
+  const onSubmitForm = (event) => {
+    event.preventDefault();
+    const organizationId = localStorage.getItem('organizationId')
+    let data = {
+      firstName : firstName,
+      lastName : lastName,
+      username : email,
+      password : password,
+      phone: phone,
+      role : "Employee",
+      organizationId : organizationId
+    };
+
+    const result = Object.values(data).filter((element) => element === undefined)
+    if(result.length > 0) {
+      setOpen(true);
+      setMessage("Please Verify all details")
+    } else {
+      setOpen(false);
+      employeeOnboard(data);
+    }
+  }
 
   return (
     <form
-      autoComplete="off"
       noValidate
+      onSubmit={onSubmitForm}
+      autoComplete="off"
       className={clsx(classes.root, className)}
-      {...rest}
     >
       <Card>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          {message}
+        </Alert>
+      </Snackbar>
         <CardHeader
           subheader="The information can be edited"
           title="Employee details"
@@ -74,15 +161,65 @@ const EmployeeDetails = ({ className, ...rest }) => {
               xs={12}
             >
               <TextField
-                fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                name="firstName"
-                onChange={handleChange}
-                required
-                value={values.firstName}
-                variant="outlined"
-              />
+              variant="outlined"
+              helperText="Please specify the first name"
+              required
+              fullWidth
+              id="firstName"
+              label="First Name"
+              name="firstName"            
+              autoFocus
+              onBlur={event => handleFirstName(event)}
+            />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+              variant="outlined"
+              helperText="Please specify the last name"
+              required
+              fullWidth
+              name="lastName"
+              label="Last Name"
+              id="lastName"              
+              onBlur={event => handleLastName(event)}
+            />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+              variant="outlined"
+              helperText="Please specify the Email"
+              required
+              fullWidth
+              name="username"
+              label="Email"
+              id="username"              
+              onBlur={event => handleEmail(event)}
+            />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+              variant="outlined"
+              helperText="Please specify the password"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              id="password"
+              type="password"     
+              onBlur={event => handlePassword(event)}
+            />
             </Grid>
             <Grid
               item
@@ -91,57 +228,13 @@ const EmployeeDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="Last name"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Email Address"
-                name="email"
-                onChange={handleChange}
-                required
-                value={values.email}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
+                helperText="Please specify the phone number"
                 label="Phone Number"
                 name="phone"
-                onChange={handleChange}
                 type="number"
-                value={values.phone}
                 variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
                 required
-                value={values.country}
-                variant="outlined"
+                onBlur={event => handlePhone(event)}
               />
             </Grid>
             <Grid
@@ -151,16 +244,14 @@ const EmployeeDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
+                name="role"
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.state}
                 variant="outlined"
+                value="Employee"
               >
-                {states.map((option) => (
+                {roles.map((option) => (
                   <option
                     key={option.value}
                     value={option.value}
@@ -181,6 +272,7 @@ const EmployeeDetails = ({ className, ...rest }) => {
           <Button
             color="primary"
             variant="contained"
+            type="submit"
           >
             Save details
           </Button>
