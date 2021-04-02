@@ -206,7 +206,7 @@ export const organizationDetail = async (data) => {
     console.log("Add More Organization Detail");
     const organizationId = localStorage.getItem('organizationId')
     const response = await fetch('http://localhost:5000/organizations/details/'+organizationId, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
