@@ -6,9 +6,7 @@ import {
   Box,
   Button,
   Container,
-  Link,
   TextField,
-  Typography,
   makeStyles,
   Card,
   CardContent,
@@ -19,8 +17,13 @@ import {
 import Page from '../../componenets/Page';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import { validateEmail, validatePassword, validateString, validateWebsite, matchPassword } from '../../utility/validation'
-import { register } from '../../services/api';
+import {
+  validateString, 
+  validateNumber,
+  validatePhone,
+  validateSize
+} from '../../utility/validation'
+import { organizationDetail } from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,15 +38,19 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const RegisterView = () => {
+const OrganizationDetailsVIew = () => {
   const classes = useStyles();
   const navigate = useNavigate();
 
-  const [organizationName, setOrganizationName] = useState();
-  const [organizationWebsite, setOrganizationWebsite] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [organizationType, setOrganizationType] = useState();
+  const [organizationSize, setOrganizationSize] = useState();
+  const [organizationStreet, setOrganizationStreet] = useState();
+  const [organizationCity, setOrganizationCity] = useState();
+  const [organizationZipcode, setOrganizationZipcode] = useState();
+  const [organizationProvince, setOrganizationProvince] = useState();
+  const [organizationCountry, setOrganizationCountry] = useState();
+  const [organizationPhone, setOrganizationPhone] = useState();
+
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState();
 
@@ -54,63 +61,97 @@ const RegisterView = () => {
     setOpen(false);
   };
 
-  const handleOrganizationName = (event) => {
+  const handleOrganizationType = (event) => {
     if(!validateString(event.target.value)) {
       setOpen(true);
-      setMessage("Please Enter Valid Name")
+      setMessage("Please Enter Valid Organizatiion Type")
     } else {
       setOpen(false);
-      setOrganizationName(event.target.value)
+      setOrganizationType(event.target.value)
     }
   }
 
-  const handleOrganizationWebsite = (event) => {
-    if(!validateWebsite(event.target.value)) {
+  const handleOrganizationSize = (event) => {
+    if(!validateSize(event.target.value)) {
       setOpen(true);
-      setMessage("Please Enter Valid Website URL")
+      setMessage("Please Enter Valid Size")
     } else {
       setOpen(false);
-      setOrganizationWebsite(event.target.value)
+      setOrganizationSize(event.target.value)
     }
   }
 
-  const handleEmail = (event) => {
-    if(!validateEmail(event.target.value)) {
+  const handleStreet = (event) => {
+    if(!validateString(event.target.value)) {
       setOpen(true);
-      setMessage("Please Enter Valid Email Address")
+      setMessage("Please Enter Valid Street Name")
     } else {
       setOpen(false);
-      setEmail(event.target.value)
+      setOrganizationStreet(event.target.value)
     }
   }
 
-  const handlePassword = (event) => {
-    if(!validatePassword(event.target.value)) {
+  const handleCity = (event) => {
+    if(!validateString(event.target.value)) {
       setOpen(true);
-      setMessage("Please Enter Valid Password")
+      setMessage("Please Enter Valid City Name")
     } else {
       setOpen(false);
-      setPassword(event.target.value)
+      setOrganizationCity(event.target.value)
     }
   }
 
-  const handleConfirmPassword = (event) => {
-    if(!validatePassword(event.target.value) && !matchPassword(password, event.target.value)) {
+  const handleZipcode = (event) => {
+    if(!validateNumber(event.target.value)) {
       setOpen(true);
-      setMessage("Please Enter Valid Password")
+      setMessage("Please Enter Valid Zipcode")
     } else {
       setOpen(false);
-      setConfirmPassword(event.target.value)
+      setOrganizationZipcode(event.target.value)
+    }
+  }
+
+  const handleProvince = (event) => {
+    if(!validateString(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Province")
+    } else {
+      setOpen(false);
+      setOrganizationProvince(event.target.value)
+    }
+  }
+
+  const handleCountry = (event) => {
+    if(!validateString(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Country")
+    } else {
+      setOpen(false);
+      setOrganizationCountry(event.target.value)
+    }
+  }
+
+  const handlePhone = (event) => {
+    if(!validatePhone(event.target.value)) {
+      setOpen(true);
+      setMessage("Please Enter Valid Phone number")
+    } else {
+      setOpen(false);
+      setOrganizationPhone(event.target.value)
     }
   }
 
   const onSubmitForm = (event) => {
     event.preventDefault();
     let data = {
-      organizationName,
-      organizationWebsite,
-      email,
-      confirmPassword
+      organizationType,
+      organizationSize,
+      organizationStreet,
+      organizationCity,
+      organizationZipcode,
+      organizationProvince,
+      organizationCountry,
+      organizationPhone
     };
 
     const result = Object.values(data).filter((element) => element === undefined)
@@ -119,11 +160,9 @@ const RegisterView = () => {
       setMessage("Please Verify all details")
     } else {
       setOpen(false);
-      register(data).then((response)=>{
+      organizationDetail(data).then((response)=>{
         if(response.status === "ok") {
-          localStorage.setItem("username", response.data.username);
-          localStorage.setItem("organizationId", response.data._id);
-          navigate('/verify', { replace: true });
+          navigate('/login', { replace: true });
         } else {
           setOpen(true);
           setMessage("Please Try Again!!")
@@ -144,11 +183,6 @@ const RegisterView = () => {
         justifyContent="center"
       >
         <Container maxWidth="sm">
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error">
-            {message}
-          </Alert>
-        </Snackbar>
           <Formik
             initialValues={{
               email: '',
@@ -177,76 +211,89 @@ const RegisterView = () => {
                 </Snackbar>
                 <CardHeader
                   subheader="The information can be edited"
-                  title="Register Organization"
+                  title="Organization details"
                 />
                 <Divider />
                 <CardContent>
                   <Grid container spacing={3}>
                     <Grid item md={6} xs={12}>
                     <TextField
-                      error={Boolean(touched.organizationName && errors.organizationName)}
                       fullWidth
-                      helperText={touched.organizationName && errors.organizationName}
-                      label="Organization name"
-                      margin="normal"
-                      name="organizationName"
+                      label="Organization Type"
+                      name="organizationType"
                       onBlur={handleBlur}
-                      onChange={event => handleOrganizationName(event)}
+                      onChange={event => handleOrganizationType(event)}
                       variant="outlined"
                     />
                     </Grid>
                     <Grid item md={6} xs={12}>
                     <TextField
-                      error={Boolean(touched.organizationWebsite && errors.organizationWebsite)}
                       fullWidth
-                      helperText={touched.organizationWebsite && errors.organizationWebsite}
-                      label="Organization website"
-                      margin="normal"
-                      name="organizationWebsite"
+                      label="Organization Size"
+                      name="organizationSize"
                       onBlur={handleBlur}
-                      onChange={event => handleOrganizationWebsite(event)}
+                      onChange={event => handleOrganizationSize(event)}
+                      variant="outlined"
+                      type="number"
+                    />
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Phone"
+                      name="organizationPhone"
+                      onBlur={handleBlur}
+                      onChange={event => handlePhone(event)}
                       variant="outlined"
                     />
                     </Grid>
                     <Grid item md={6} xs={12}>
                     <TextField
-                      error={Boolean(touched.email && errors.email)}
                       fullWidth
-                      helperText={touched.email && errors.email}
-                      label="Email Address"
-                      margin="normal"
-                      name="email"
+                      label="Street"
+                      name="organizationStreet"
                       onBlur={handleBlur}
-                      onChange={event => handleEmail(event)}
-                      type="email"
+                      onChange={event => handleStreet(event)}
                       variant="outlined"
                     />
                     </Grid>
                     <Grid item md={6} xs={12}>
                     <TextField
-                      error={Boolean(touched.password && errors.password)}
                       fullWidth
-                      helperText={touched.password && errors.password}
-                      label="Password"
-                      margin="normal"
-                      name="password"
+                      label="City"
+                      name="organizationCity"
                       onBlur={handleBlur}
-                      onChange={event => handlePassword(event)}
-                      type="password"
+                      onChange={event => handleCity(event)}
                       variant="outlined"
                     />
                     </Grid>
                     <Grid item md={6} xs={12}>
                     <TextField
-                      error={Boolean(touched.confirmPassword && errors.confirmPassword)}
                       fullWidth
-                      helperText={touched.confirmPassword && errors.confirmPassword}
-                      label="Confirm Password"
-                      margin="normal"
-                      name="confirmPassword"
+                      label="Zipcode"
+                      name="organizationZipcode"
                       onBlur={handleBlur}
-                      onChange={event => handleConfirmPassword(event)}
-                      type="password"
+                      onChange={event => handleZipcode(event)}
+                      variant="outlined"
+                    />
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Province"
+                      name="organizationProvince"
+                      onBlur={handleBlur}
+                      onChange={event => handleProvince(event)}
+                      variant="outlined"
+                    />
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Country"
+                      name="organizationCountry"
+                      onBlur={handleBlur}
+                      onChange={event => handleCountry(event)}
                       variant="outlined"
                     />
                     </Grid>
@@ -267,21 +314,6 @@ const RegisterView = () => {
                   </Button>
                 </Box>
                 </Card>
-                
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Have an account?
-                  {' '}
-                  <Link
-                    component={RouterLink}
-                    to="/login"
-                    variant="h6"
-                  >
-                    Sign in
-                  </Link>
-                </Typography>
               </form>
             )}
           </Formik>
@@ -291,4 +323,4 @@ const RegisterView = () => {
   );
 };
 
-export default RegisterView;
+export default OrganizationDetailsVIew;

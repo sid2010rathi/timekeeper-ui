@@ -11,6 +11,7 @@ import LoginView from './views/Authentication/LoginView';
 // import ProductListView from 'src/views/product/ProductListView';
 import RegisterView from './views/Authentication/RegisterView';
 import VerifyAccountView from './views/Authentication/VerifyAccountView';
+import OrganizationDetailsVIew from './views/Authentication/OrganizationDetailsVIew';
 // import SettingsView from 'src/views/settings/SettingsView';
 
 const routes = [
@@ -34,6 +35,7 @@ const routes = [
       { path: 'login', element: <LoginView /> },
       { path: 'register', element: <RegisterView /> },
       { path: 'verify', element: <VerifyAccountView /> },
+      { path: 'details', element: <OrganizationDetailsVIew /> },
       // { path: '404', element: <NotFoundView /> },
       { path: '/', element: <Navigate to="/app/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }

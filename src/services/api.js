@@ -186,3 +186,32 @@ export const employeePunchOut = async (data) => {
         return response
     }
 }
+
+export const getOrganizationEmployees = async () => {
+    console.log("Get All Employee API Called");
+    const token = localStorage.getItem('token');
+    const organizationId = localStorage.getItem('organizationId')
+    const response = await fetch('http://localhost:5000/organizations/employee/'+organizationId, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer "+ token
+        }
+    }).then((res) => res.json());
+
+    return response;
+}
+
+export const organizationDetail = async (data) => {
+    console.log("Add More Organization Detail");
+    const organizationId = localStorage.getItem('organizationId')
+    const response = await fetch('http://localhost:5000/organizations/details/'+organizationId, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then((res) => res.json());
+
+    return response;
+}

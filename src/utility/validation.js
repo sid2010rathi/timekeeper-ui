@@ -61,3 +61,10 @@ export const validatePhone = (number) => {
     const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     return regex.test(number);
 }
+
+export const validateSize = (size) => {
+    if(isNaN(size)) {
+        return false;
+    }
+    return true;
+}

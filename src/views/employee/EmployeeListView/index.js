@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Container,
@@ -7,7 +7,7 @@ import {
 import Page from '../../../componenets/Page';
 import Results from './Results';
 import Toolbar from './Toolbar';
-import data from './data';
+import { getOrganizationEmployees } from '../../../services/api'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +20,12 @@ const useStyles = makeStyles((theme) => ({
 
 const EmployeeListView = () => {
   const classes = useStyles();
-  const [employees] = useState(data);
+  let employees = []
+  useEffect(() => {
+    getOrganizationEmployees().then((res) => {
+      employees.push(res.data)
+    })
+  }, [])
 
   return (
     <Page

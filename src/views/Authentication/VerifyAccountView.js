@@ -5,12 +5,13 @@ import { Formik } from 'formik';
 import {
   Box,
   Button,
-  Checkbox,
   Container,
-  FormHelperText,
-  Link,
   TextField,
-  Typography,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
   makeStyles
 } from '@material-ui/core';
 import Page from '../../componenets/Page';
@@ -76,7 +77,7 @@ const VerifyAccountView = () => {
       setOpen(false);
       verifyCode(data).then((response)=>{
         if(response.status === "ok") {
-          navigate('/app/dashboard', { replace: true });
+          navigate('/details', { replace: true });
         } else {
             setOpen(true);
             setMessage("Please Try Again!!")
@@ -97,11 +98,6 @@ const VerifyAccountView = () => {
         justifyContent="center"
       >
         <Container maxWidth="sm">
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error">
-            {message}
-          </Alert>
-        </Snackbar>
           <Formik
             initialValues={{
               code: ''
@@ -117,51 +113,48 @@ const VerifyAccountView = () => {
               values
             }) => (
               <form noValidate onSubmit={onSubmitForm} autoComplete="off">
-                <Box mb={-2}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
-                    Verify your Account
-                  </Typography>
-                </Box>
-                <TextField
-                  error={Boolean(touched.organizationName && errors.organizationName)}
-                  fullWidth
-                  helperText={touched.organizationName && errors.organizationName}
-                  label="Code"
-                  margin="normal"
-                  name="code"
-                  onBlur={handleBlur}
-                  onChange={event => handleCode(event)}
-                  variant="outlined"
+                <Card>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                  <Alert onClose={handleClose} severity="error">
+                    {message}
+                  </Alert>
+                </Snackbar>
+                <CardHeader
+                  subheader="Check your E-Mail"
+                  title="Verify your account"
                 />
-                <Box my={2}>
+                <Divider />
+                <CardContent>
+                <Grid
+                  container
+                  spacing={3}
+                >
+                  <TextField
+                    fullWidth
+                    label="Code"
+                    name="code"
+                    onBlur={handleBlur}
+                    onChange={event => handleCode(event)}
+                    variant="outlined"
+                  />
+                </Grid>
+                </CardContent>
+                <Divider />
+                
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  p={2}
+                >
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
-                    fullWidth
-                    size="large"
-                    type="submit"
                     variant="contained"
+                    type="submit"
                   >
-                    Verify
+                    Save details
                   </Button>
                 </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Have an account?
-                  {' '}
-                  <Link
-                    component={RouterLink}
-                    to="/login"
-                    variant="h6"
-                  >
-                    Sign in
-                  </Link>
-                </Typography>
+                </Card>
               </form>
             )}
           </Formik>
